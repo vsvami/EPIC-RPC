@@ -9,21 +9,43 @@
 /* Begin PBXBuildFile section */
 		640215382C1A5A32001D1E84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215372C1A5A32001D1E84 /* AppDelegate.swift */; };
 		6402153A2C1A5A32001D1E84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215392C1A5A32001D1E84 /* SceneDelegate.swift */; };
-		6402153C2C1A5A32001D1E84 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402153B2C1A5A32001D1E84 /* ViewController.swift */; };
-		6402153F2C1A5A32001D1E84 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 6402153E2C1A5A32001D1E84 /* Base */; };
+		6402153C2C1A5A32001D1E84 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402153B2C1A5A32001D1E84 /* StartViewController.swift */; };
 		640215412C1A5A34001D1E84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 640215402C1A5A34001D1E84 /* Assets.xcassets */; };
 		640215442C1A5A34001D1E84 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 640215432C1A5A34001D1E84 /* Base */; };
+		640215522C1A5C96001D1E84 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 640215512C1A5C96001D1E84 /* music.mp3 */; };
+		640215572C1A5D3A001D1E84 /* CustomButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215532C1A5D3A001D1E84 /* CustomButtonFactory.swift */; };
+		640215582C1A5D3A001D1E84 /* CustomLabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215542C1A5D3A001D1E84 /* CustomLabelFactory.swift */; };
+		640215592C1A5D3A001D1E84 /* CustomProgressViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215552C1A5D3A001D1E84 /* CustomProgressViewFactory.swift */; };
+		6402155A2C1A5D3A001D1E84 /* RoundedButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215562C1A5D3A001D1E84 /* RoundedButtonFactory.swift */; };
+		6402155D2C1A5D55001D1E84 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402155B2C1A5D55001D1E84 /* ResultViewController.swift */; };
+		6402155E2C1A5D55001D1E84 /* RoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402155C2C1A5D55001D1E84 /* RoundViewController.swift */; };
+		640215612C1A5E4C001D1E84 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 640215602C1A5E4C001D1E84 /* SnapKit */; };
+		640215632C1A5E4C001D1E84 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 640215622C1A5E4C001D1E84 /* SnapKit-Dynamic */; };
+		640215652C1A5EA0001D1E84 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215642C1A5EA0001D1E84 /* Player.swift */; };
+		640215672C1A63C7001D1E84 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215662C1A63C7001D1E84 /* SplashViewController.swift */; };
+		640215692C1A63DD001D1E84 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215682C1A63DD001D1E84 /* RulesViewController.swift */; };
+		6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402156A2C1A63F1001D1E84 /* LoadViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		640215342C1A5A32001D1E84 /* EPIC RPC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EPIC RPC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		640215372C1A5A32001D1E84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		640215392C1A5A32001D1E84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6402153B2C1A5A32001D1E84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6402153E2C1A5A32001D1E84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6402153B2C1A5A32001D1E84 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		640215402C1A5A34001D1E84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		640215432C1A5A34001D1E84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		640215452C1A5A34001D1E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		640215512C1A5C96001D1E84 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
+		640215532C1A5D3A001D1E84 /* CustomButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonFactory.swift; sourceTree = "<group>"; };
+		640215542C1A5D3A001D1E84 /* CustomLabelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabelFactory.swift; sourceTree = "<group>"; };
+		640215552C1A5D3A001D1E84 /* CustomProgressViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomProgressViewFactory.swift; sourceTree = "<group>"; };
+		640215562C1A5D3A001D1E84 /* RoundedButtonFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButtonFactory.swift; sourceTree = "<group>"; };
+		6402155B2C1A5D55001D1E84 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		6402155C2C1A5D55001D1E84 /* RoundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundViewController.swift; sourceTree = "<group>"; };
+		640215642C1A5EA0001D1E84 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		640215662C1A63C7001D1E84 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		640215682C1A63DD001D1E84 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
+		6402156A2C1A63F1001D1E84 /* LoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				640215612C1A5E4C001D1E84 /* SnapKit in Frameworks */,
+				640215632C1A5E4C001D1E84 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +80,73 @@
 		640215362C1A5A32001D1E84 /* EPIC RPC */ = {
 			isa = PBXGroup;
 			children = (
-				640215372C1A5A32001D1E84 /* AppDelegate.swift */,
-				640215392C1A5A32001D1E84 /* SceneDelegate.swift */,
-				6402153B2C1A5A32001D1E84 /* ViewController.swift */,
-				6402153D2C1A5A32001D1E84 /* Main.storyboard */,
-				640215402C1A5A34001D1E84 /* Assets.xcassets */,
-				640215422C1A5A34001D1E84 /* LaunchScreen.storyboard */,
-				640215452C1A5A34001D1E84 /* Info.plist */,
+				6402154E2C1A5A8C001D1E84 /* App */,
+				6402154F2C1A5C36001D1E84 /* Factories */,
+				6402154C2C1A5A6E001D1E84 /* ViewControllers */,
+				6402154B2C1A5A61001D1E84 /* Models */,
+				6402154D2C1A5A7E001D1E84 /* Storyboards */,
+				640215502C1A5C78001D1E84 /* Resources */,
 			);
 			path = "EPIC RPC";
+			sourceTree = "<group>";
+		};
+		6402154B2C1A5A61001D1E84 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				640215642C1A5EA0001D1E84 /* Player.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6402154C2C1A5A6E001D1E84 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6402153B2C1A5A32001D1E84 /* StartViewController.swift */,
+				6402155B2C1A5D55001D1E84 /* ResultViewController.swift */,
+				6402155C2C1A5D55001D1E84 /* RoundViewController.swift */,
+				640215662C1A63C7001D1E84 /* SplashViewController.swift */,
+				640215682C1A63DD001D1E84 /* RulesViewController.swift */,
+				6402156A2C1A63F1001D1E84 /* LoadViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6402154D2C1A5A7E001D1E84 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				640215422C1A5A34001D1E84 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		6402154E2C1A5A8C001D1E84 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				640215372C1A5A32001D1E84 /* AppDelegate.swift */,
+				640215392C1A5A32001D1E84 /* SceneDelegate.swift */,
+				640215452C1A5A34001D1E84 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		6402154F2C1A5C36001D1E84 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				640215532C1A5D3A001D1E84 /* CustomButtonFactory.swift */,
+				640215542C1A5D3A001D1E84 /* CustomLabelFactory.swift */,
+				640215552C1A5D3A001D1E84 /* CustomProgressViewFactory.swift */,
+				640215562C1A5D3A001D1E84 /* RoundedButtonFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		640215502C1A5C78001D1E84 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				640215402C1A5A34001D1E84 /* Assets.xcassets */,
+				640215512C1A5C96001D1E84 /* music.mp3 */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +165,10 @@
 			dependencies = (
 			);
 			name = "EPIC RPC";
+			packageProductDependencies = (
+				640215602C1A5E4C001D1E84 /* SnapKit */,
+				640215622C1A5E4C001D1E84 /* SnapKit-Dynamic */,
+			);
 			productName = "EPIC RPC";
 			productReference = 640215342C1A5A32001D1E84 /* EPIC RPC.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +197,9 @@
 				Base,
 			);
 			mainGroup = 6402152B2C1A5A32001D1E84;
+			packageReferences = (
+				6402155F2C1A5E4C001D1E84 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 640215352C1A5A32001D1E84 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,7 +216,7 @@
 			files = (
 				640215412C1A5A34001D1E84 /* Assets.xcassets in Resources */,
 				640215442C1A5A34001D1E84 /* Base in Resources */,
-				6402153F2C1A5A32001D1E84 /* Base in Resources */,
+				640215522C1A5C96001D1E84 /* music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +227,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6402153C2C1A5A32001D1E84 /* ViewController.swift in Sources */,
+				640215582C1A5D3A001D1E84 /* CustomLabelFactory.swift in Sources */,
+				6402153C2C1A5A32001D1E84 /* StartViewController.swift in Sources */,
+				6402155A2C1A5D3A001D1E84 /* RoundedButtonFactory.swift in Sources */,
+				6402155D2C1A5D55001D1E84 /* ResultViewController.swift in Sources */,
+				6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */,
 				640215382C1A5A32001D1E84 /* AppDelegate.swift in Sources */,
+				640215592C1A5D3A001D1E84 /* CustomProgressViewFactory.swift in Sources */,
 				6402153A2C1A5A32001D1E84 /* SceneDelegate.swift in Sources */,
+				640215572C1A5D3A001D1E84 /* CustomButtonFactory.swift in Sources */,
+				640215652C1A5EA0001D1E84 /* Player.swift in Sources */,
+				6402155E2C1A5D55001D1E84 /* RoundViewController.swift in Sources */,
+				640215692C1A63DD001D1E84 /* RulesViewController.swift in Sources */,
+				640215672C1A63C7001D1E84 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		6402153D2C1A5A32001D1E84 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6402153E2C1A5A32001D1E84 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		640215422C1A5A34001D1E84 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -293,12 +384,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "EPIC RPC/Info.plist";
+				INFOPLIST_FILE = "EPIC RPC/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,9 +397,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "swift.EPIC-RPC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -320,12 +415,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "EPIC RPC/Info.plist";
+				INFOPLIST_FILE = "EPIC RPC/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -333,9 +428,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "swift.EPIC-RPC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -361,6 +460,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6402155F2C1A5E4C001D1E84 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		640215602C1A5E4C001D1E84 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6402155F2C1A5E4C001D1E84 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		640215622C1A5E4C001D1E84 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6402155F2C1A5E4C001D1E84 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6402152C2C1A5A32001D1E84 /* Project object */;
 }

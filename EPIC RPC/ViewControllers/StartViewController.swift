@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  StartViewController.swift
 //  EPIC RPC
 //
 //  Created by Vladimir Dmitriev on 13.06.24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
