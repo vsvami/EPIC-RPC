@@ -11,9 +11,21 @@ final class LoadViewController: UIViewController {
 
     let frameHeight: CGFloat = UIScreen .main.bounds.size.height
     
-    init() {
-        super.init(frame: CGRect())
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.navigateToResultVC()
+        }
+    }
+    
+    func navigateToResultVC() {
+        navigationController?.pushViewController(RoundViewController(), animated: true)
     }
     
     func setupUI(){
@@ -23,11 +35,6 @@ final class LoadViewController: UIViewController {
         createPlayerStackView(imageName: "player2", labelText: "15 victories / 1 lose", yValue: frameHeight * 0.64)
         createGetReady()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 }
 
 
@@ -40,11 +47,11 @@ extension LoadViewController {
         imageView.image = UIImage(named: "Background1")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        view.addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     // функция для инициализации любого изображения
@@ -58,20 +65,20 @@ extension LoadViewController {
     private func setVcImage(){
         let imageView = createImage("vs")
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageView)
-        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        view.addSubview(imageView)
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     // создаем фнкцию по созданию стека для изображения игрока и статистики и его позиционированием
     private func createPlayerStackView(imageName: String, labelText: String, yValue: CGFloat){
         // настраиваем StackView
         let stackView = UIStackView()
-        addSubview(stackView)
+        view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 15
-        stackView.center = center
+        stackView.center = view.center
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         
@@ -84,9 +91,9 @@ extension LoadViewController {
         stackView.addArrangedSubview(label)
         
         // позиционируем StackView
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: yValue).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: yValue).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     // содаем статистику для игрока
@@ -104,13 +111,15 @@ extension LoadViewController {
         label.font = UIFont.systemFont(ofSize: 30)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(label)
+        view.addSubview(label)
         
-        label.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
     }
 
 }
 
-
+#Preview("StartVC", body: {
+    LoadViewController()
+})

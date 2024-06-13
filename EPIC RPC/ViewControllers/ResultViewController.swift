@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 final class ResultViewController: UIViewController {
-
+    
     private let backgroundImageView = UIImageView(image: UIImage(named: "Background1"))
     
     private let circleView: UIView = {
@@ -17,7 +17,7 @@ final class ResultViewController: UIViewController {
         view.backgroundColor = .customBlue
         return view
     } ()
-
+    
     private let playerImage = UIImageView(image: UIImage(named: "player1"))
     
     private let resultLabel: UILabel = {
@@ -44,7 +44,7 @@ final class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupbuttonsStackView()
         
         setupSubview(
@@ -59,10 +59,37 @@ final class ResultViewController: UIViewController {
         setupLayout()
         
     }
-
+    
 }
 
 private extension ResultViewController {
+    
+    func addTargetAction() {
+        homeButton.addTarget(
+            self,
+            action: #selector(goToMainViewController),
+            for: .touchUpInside
+        )
+        
+        repeatButton.addTarget(
+            self,
+            action: #selector(repeatButtonTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    @objc func goToMainViewController() {
+        if let navigationController = navigationController {
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
+    
+    @objc func repeatButtonTapped() {
+        if let navigationController = navigationController {
+            let roundVC = RoundViewController()
+            navigationController.setViewControllers([roundVC], animated: true)
+        }
+    }
     
     func setupbuttonsStackView() {
         stackView.axis = .horizontal
@@ -120,11 +147,4 @@ private extension ResultViewController {
         }
     }
     
-}
-
-struct ResultViewControllerProvider: PreviewProvider {
-    static var previews: some View {
-      
-       ResultViewController().showPreview()
-    }
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A105EF72C1B235200CE398F /* ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A105EF62C1B235200CE398F /* ext.swift */; };
 		640215382C1A5A32001D1E84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215372C1A5A32001D1E84 /* AppDelegate.swift */; };
 		6402153A2C1A5A32001D1E84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215392C1A5A32001D1E84 /* SceneDelegate.swift */; };
 		6402153C2C1A5A32001D1E84 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402153B2C1A5A32001D1E84 /* StartViewController.swift */; };
@@ -25,12 +24,11 @@
 		640215692C1A63DD001D1E84 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215682C1A63DD001D1E84 /* RulesViewController.swift */; };
 		6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402156A2C1A63F1001D1E84 /* LoadViewController.swift */; };
 		6402156E2C1B1784001D1E84 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402156D2C1B1784001D1E84 /* DataStore.swift */; };
-		645CE5162C1B8A020041453F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 645CE5152C1B8A020041453F /* SnapKit */; };
-		645CE5182C1B8A020041453F /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 645CE5172C1B8A020041453F /* SnapKit-Dynamic */; };
+		649366322C1BAC0900EAEFF2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 649366312C1BAC0900EAEFF2 /* SnapKit */; };
+		649366342C1BAC0A00EAEFF2 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 649366332C1BAC0A00EAEFF2 /* SnapKit-Dynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A105EF62C1B235200CE398F /* ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ext.swift; sourceTree = "<group>"; };
 		640215342C1A5A32001D1E84 /* EPIC RPC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EPIC RPC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		640215372C1A5A32001D1E84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		640215392C1A5A32001D1E84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,8 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				645CE5162C1B8A020041453F /* SnapKit in Frameworks */,
-				645CE5182C1B8A020041453F /* SnapKit-Dynamic in Frameworks */,
+				649366322C1BAC0900EAEFF2 /* SnapKit in Frameworks */,
+				649366342C1BAC0A00EAEFF2 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +128,6 @@
 				640215372C1A5A32001D1E84 /* AppDelegate.swift */,
 				640215392C1A5A32001D1E84 /* SceneDelegate.swift */,
 				640215452C1A5A34001D1E84 /* Info.plist */,
-				0A105EF62C1B235200CE398F /* ext.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -180,8 +177,8 @@
 			);
 			name = "EPIC RPC";
 			packageProductDependencies = (
-				645CE5152C1B8A020041453F /* SnapKit */,
-				645CE5172C1B8A020041453F /* SnapKit-Dynamic */,
+				649366312C1BAC0900EAEFF2 /* SnapKit */,
+				649366332C1BAC0A00EAEFF2 /* SnapKit-Dynamic */,
 			);
 			productName = "EPIC RPC";
 			productReference = 640215342C1A5A32001D1E84 /* EPIC RPC.app */;
@@ -244,7 +241,6 @@
 				640215582C1A5D3A001D1E84 /* CustomLabelFactory.swift in Sources */,
 				6402153C2C1A5A32001D1E84 /* StartViewController.swift in Sources */,
 				6402155A2C1A5D3A001D1E84 /* RoundedButtonFactory.swift in Sources */,
-				0A105EF72C1B235200CE398F /* ext.swift in Sources */,
 				6402155D2C1A5D55001D1E84 /* ResultViewController.swift in Sources */,
 				6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */,
 				640215382C1A5A32001D1E84 /* AppDelegate.swift in Sources */,
@@ -489,12 +485,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		645CE5152C1B8A020041453F /* SnapKit */ = {
+		649366312C1BAC0900EAEFF2 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A105EF32C1B21BB00CE398F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		645CE5172C1B8A020041453F /* SnapKit-Dynamic */ = {
+		649366332C1BAC0A00EAEFF2 /* SnapKit-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A105EF32C1B21BB00CE398F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";

@@ -7,13 +7,6 @@
 
 import UIKit
 
-struct Rule {
-    let text: String
-    let image: String
-    let subpoint: Bool
-}
-
-
 final class RulesViewController: UIViewController {
     let rules = [Rule(text: "Игра проводится между игроком и компьютером.", image: "rule1", subpoint: false),
                  Rule(text: "Жесты:", image: "rule2", subpoint: false),
@@ -25,22 +18,18 @@ final class RulesViewController: UIViewController {
                  Rule(text: "За каждую победу игрок получает 500 баллов, которые можно посмотреть на доске лидеров.", image: "rule5", subpoint: false)
     ]
     
-    init() {
-        super.init(frame: CGRect())
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         setupUI()
     }
     
     func setupUI(){
-        backgroundColor = .white
+        view.backgroundColor = .white
         createHeading()
         setRules()
         
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 
 }
 
@@ -48,15 +37,18 @@ extension RulesViewController {
     
     private func createHeading(){
         let label = UILabel()
+        
         label.text = "Rules"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 30)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(label)
-        label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        
+        view.addSubview(label)
+        
+        label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
     }
     
     // функция для инициализации любого изображения
@@ -105,7 +97,7 @@ extension RulesViewController {
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.distribution = .fill
-        addSubview(stackView)
+        view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -114,17 +106,20 @@ extension RulesViewController {
             stackView.addArrangedSubview(rule)
         }
         
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 150).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
+        stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         
     }
-    
-    
-    
-    
 }
 
+extension RulesViewController {
+    struct Rule {
+        let text: String
+        let image: String
+        let subpoint: Bool
+    }
+}
 
 
 
