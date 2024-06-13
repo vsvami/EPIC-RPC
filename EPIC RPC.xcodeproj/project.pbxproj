@@ -25,6 +25,7 @@
 		640215672C1A63C7001D1E84 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215662C1A63C7001D1E84 /* SplashViewController.swift */; };
 		640215692C1A63DD001D1E84 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215682C1A63DD001D1E84 /* RulesViewController.swift */; };
 		6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402156A2C1A63F1001D1E84 /* LoadViewController.swift */; };
+		D1C1B63C2C1B20C50003FE5A /* FightLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C1B63B2C1B20C50003FE5A /* FightLoadView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		640215662C1A63C7001D1E84 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		640215682C1A63DD001D1E84 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
 		6402156A2C1A63F1001D1E84 /* LoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
+		D1C1B63B2C1B20C50003FE5A /* FightLoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FightLoadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				640215642C1A5EA0001D1E84 /* Player.swift */,
+				D1C1B63B2C1B20C50003FE5A /* FightLoadView.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				640215582C1A5D3A001D1E84 /* CustomLabelFactory.swift in Sources */,
 				6402153C2C1A5A32001D1E84 /* StartViewController.swift in Sources */,
 				6402155A2C1A5D3A001D1E84 /* RoundedButtonFactory.swift in Sources */,
+				D1C1B63C2C1B20C50003FE5A /* FightLoadView.swift in Sources */,
 				6402155D2C1A5D55001D1E84 /* ResultViewController.swift in Sources */,
 				6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */,
 				640215382C1A5A32001D1E84 /* AppDelegate.swift in Sources */,
