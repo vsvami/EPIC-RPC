@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SwiftUI
 final class ResultViewController: UIViewController {
 
     private let backgroundImageView = UIImageView(image: UIImage(named: "Background1"))
@@ -120,4 +120,11 @@ private extension ResultViewController {
         }
     }
     
+}
+
+struct ResultViewControllerProvider: PreviewProvider {
+    static var previews: some View {
+      
+       ResultViewController().showPreview()
+    }
 }
