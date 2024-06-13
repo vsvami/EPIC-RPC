@@ -13,10 +13,12 @@ protocol ProgressViewFactory {
 
 final class CustomProgressViewFactory: ProgressViewFactory {
     
+    let value: Float
     let tintColor: UIColor
     let angle: Double
 
-    init(tintColor: UIColor, angle: Double) {
+    init(value: Float, tintColor: UIColor, angle: Double) {
+        self.value = value
         self.tintColor = tintColor
         self.angle = angle
     }
@@ -24,7 +26,7 @@ final class CustomProgressViewFactory: ProgressViewFactory {
     func createProgressView() -> UIProgressView {
         let progressView = UIProgressView()
         progressView.transform = CGAffineTransform(rotationAngle: .pi / angle)
-        progressView.progress = 0.5
+        progressView.progress = value
         progressView.tintColor = tintColor
         progressView.backgroundColor = .customBlue
         

@@ -12,7 +12,10 @@ import AVFoundation
 final class RoundViewController: UIViewController {
     
     // MARK: - Private Properties
-    private var backgroundImageView = UIImageView(image: UIImage(named: "Background2"))
+    private let dataStore = DataStore.shared
+    private var game: Game!
+    
+    private let backgroundImageView = UIImageView(image: UIImage(named: "Background2"))
     
     private let playerOneHand = UIImageView(image: UIImage(named: "femaleHand"))
     private let playerTwoHand = UIImageView(image: UIImage(named: "maleHand"))
@@ -31,17 +34,17 @@ final class RoundViewController: UIViewController {
     } ()
  
     private let timerProgressView: UIProgressView = {
-        let progressView = CustomProgressViewFactory(tintColor: .customGreen, angle: -2)
+        let progressView = CustomProgressViewFactory(value: 1, tintColor: .customGreen, angle: -2)
         return progressView.createProgressView()
     } ()
 
     private let playerOneProgressView: UIProgressView = {
-        let progressView = CustomProgressViewFactory(tintColor: .customOrange, angle: 2)
+        let progressView = CustomProgressViewFactory(value: 0, tintColor: .customOrange, angle: 2)
         return progressView.createProgressView()
     } ()
     
     private let playerTwoProgressView: UIProgressView = {
-        let progressView = CustomProgressViewFactory(tintColor: .customOrange, angle: -2)
+        let progressView = CustomProgressViewFactory(value: 0, tintColor: .customOrange, angle: -2)
         return progressView.createProgressView()
     } ()
     
@@ -51,7 +54,7 @@ final class RoundViewController: UIViewController {
         return uiView
     } ()
     
-    private lazy var rockButton: UIButton = {
+    private let rockButton: UIButton = {
         let button = RoundedButtonFactory(image: "rockIcon", color: .customBlue, offset: 0)
         return button.createButton()
     } ()
@@ -66,14 +69,10 @@ final class RoundViewController: UIViewController {
         return button.createButton()
     } ()
     
-    private let randomButton: UIButton = {
-        let button = RoundedButtonFactory(image: "randomIcon",color: .customBlue, offset: -50)
-        return button.createButton()
-    } ()
-    
     private var musicPlayer: AVAudioPlayer?
     
-    var player = Player.getPlayer()
+    private var countdownTimer: Timer?
+    private var countdownSeconds: Int = 30
     
     // MARK: - View Life Cycles
     override func viewDidLoad() {
@@ -83,6 +82,7 @@ final class RoundViewController: UIViewController {
         
         setupNavigationBar()
         setupTimerProgressView()
+        
         
         setupSubview(
             backgroundImageView,
@@ -98,30 +98,69 @@ final class RoundViewController: UIViewController {
             separator,
             rockButton,
             scissorsButton,
-            paperButton,
-            randomButton
+            paperButton
         )
         
         setupLayout()
         
-        rockButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-        scissorsButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-        paperButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-        randomButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        setupButtonAction()
         
-    }
-    
-    override func viewWillLayoutSubviews() {
-        rockButton.layer.cornerRadius = rockButton.frame.width / 2
-        scissorsButton.layer.cornerRadius = scissorsButton.frame.width / 2
-        paperButton.layer.cornerRadius = paperButton.frame.width / 2
-        randomButton.layer.cornerRadius = randomButton.frame.width / 2
+        game = Game(playerOne: dataStore.computer, playerTwo: dataStore.player)
+        
+        startCountdown()
+        
     }
     
 }
 
 // MARK: - Private Methods
 private extension RoundViewController {
+    
+    func setupButtonAction() {
+        rockButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        scissorsButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        paperButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+    }
+    
+    func updateProgressView() {
+        let progress = Float(countdownSeconds) / 30.0
+        timerProgressView.setProgress(progress, animated: true)
+    }
+    
+    func startCountdown() {
+        timerLabel.text = "0:\(countdownSeconds)"
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
+    }
+    
+    func updateCountdownLabel() {
+        timerLabel.text = "0:\(countdownSeconds)"
+    }
+    
+    func endRound() {
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+        
+        let result = game.playRound(playerOneMove: .paper, playerTwoMove: .rock)
+        
+        textLabel.text = "Time's up! \(result)"
+        
+        if game.isGameOver() {
+            if let winner = game.getWinner() {
+                textLabel.text = "\(winner === DataStore.shared.player ? "Player" : "Computer") wins the game!"
+            }
+            game.resetScores()
+        }
+    }
+    
+    @objc func updateCountdown() {
+        if countdownSeconds > 0 {
+            countdownSeconds -= 1
+            updateCountdownLabel()
+            updateProgressView()
+        } else {
+            endRound()
+        }
+    }
     
     func startMusic() {
         if let url = Bundle.main.url(forResource: "music", withExtension: "mp3") {
@@ -130,7 +169,7 @@ private extension RoundViewController {
                 musicPlayer = try AVAudioPlayer(contentsOf: url)
                 
                 musicPlayer?.numberOfLoops = -1
-                musicPlayer?.volume = 0.3
+                musicPlayer?.volume = 0.2
                 musicPlayer?.play()
             } catch {
                 print("Ошибка воспроизведения музыки: \(error.localizedDescription)")
@@ -267,12 +306,29 @@ private extension RoundViewController {
             make.width.height.equalTo(80)
         }
         
-        randomButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(scissorsButton.snp.bottom).offset(20)
-            make.width.height.equalTo(120)
-        }
+    }
+    
+
+    
+    func move(_ move: Player.Move) {
+        let playerOneMove = Player.Move.randomMoves()
+        let playerTwoMove = move
         
+        let result = game.playRound(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
+        textLabel.text = result
+        
+        playerOneHand.image = UIImage(named: playerOneMove.femaleHandImage)
+        playerTwoHand.image = UIImage(named: playerTwoMove.maleHandImage)
+        
+        playerOneProgressView.setProgress(Float(dataStore.computer.score) / 3, animated: true)
+        playerTwoProgressView.setProgress(Float(dataStore.player.score) / 3, animated: true)
+        
+        if game.isGameOver() {
+            if let winner = game.getWinner() {
+                print("\(winner === DataStore.shared.player ? "Player" : "Computer") wins the game!")
+            }
+            game.resetScores()
+        }
     }
     
     @objc func pauseGame() {
@@ -280,16 +336,21 @@ private extension RoundViewController {
     }
     
     @objc func actionButtonTapped(_ sender: UIButton) {
+        
         switch sender {
         case rockButton:
-            playerTwoHand.image = UIImage(named: player.choice[0])
+
+            // timer - 1 second
+            move(.rock)
         case scissorsButton:
-            playerTwoHand.image = UIImage(named: player.choice[1])
+            move(.scissors)
         case paperButton:
-            playerTwoHand.image = UIImage(named: player.choice[2])
+            move(.paper)
         default:
-            playerTwoHand.image = UIImage(named: player.choice[3])
+            playerOneHand.image = UIImage(named: "femaleHand")
+            playerTwoHand.image = UIImage(named: "maleHand")
         }
+        
     }
     
 }
