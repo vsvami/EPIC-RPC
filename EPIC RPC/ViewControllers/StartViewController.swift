@@ -6,25 +6,23 @@
 //
 
 import UIKit
-import SwiftUI
 import SnapKit
 
 final class StartViewController: UIViewController {
     
     //Background
-    let backgroundView = UIView()
+    private let backgroundView = UIView()
     
     // Gear / Ask
-    let gearButton = UIButton(type: .system)
-    let askButton = UIButton(type: .system)
-    let gearAndAskStack = UIStackView()
-    
+    private let gearButton = UIButton(type: .system)
+    private let askButton = UIButton(type: .system)
+    private let gearAndAskStack = UIStackView()
     
     // Hands / EPIC RPS
-    let maleRockHandImage = UIImageView()
-    let femaleScissorsHandImage = UIImageView()
+    private let maleRockHandImage = UIImageView()
+    private let femaleScissorsHandImage = UIImageView()
     
-    let topicName: UILabel = {
+    private let topicName: UILabel = {
         let label = CustomLabelFactory(text: "EPIC RPS", fontSize: 30, color: .customLightBeige)
         return label.creatLabel()
     }()
@@ -41,17 +39,18 @@ final class StartViewController: UIViewController {
         return button.createButton()
     } ()
     
-    let startAndResultsStack = UIStackView()
+    private let startAndResultsStack = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        addTargetAction()
         setupConstraints()
     }
     
     //MARK: - SETTINGS
-
-    func setupViews() {
+    
+    private func setupViews() {
         
         backgroundView.backgroundColor = UIColor(red: 245, green: 247, blue: 251, alpha: 1)
         
@@ -69,7 +68,6 @@ final class StartViewController: UIViewController {
         gearAndAskStack.distribution = .fillEqually
         gearAndAskStack.spacing = 250
         
-        
         // Добавляем кнопки в gearAndAskStack
         gearAndAskStack.addArrangedSubview(gearButton)
         gearAndAskStack.addArrangedSubview(askButton)
@@ -84,7 +82,6 @@ final class StartViewController: UIViewController {
         topicName.layer.shadowOffset = CGSize(width: 3, height: 2)
         topicName.layer.shadowRadius = 1
         
-        
         // Female hand
         femaleScissorsHandImage.image = UIImage(named: "femaleHandleft")
         
@@ -93,12 +90,10 @@ final class StartViewController: UIViewController {
         startButton.configuration?.cornerStyle = .capsule
         startButton.configuration?.attributedTitle?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight(rawValue: 700))
         
-        
         resultsButton.layer.masksToBounds = false
         resultsButton.configuration?.cornerStyle = .capsule
         resultsButton.configuration?.attributedTitle?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight(rawValue: 700))
 
-        
         // Настройка startAndResultsStackview
         startAndResultsStack.axis = .vertical
         startAndResultsStack.spacing = 20
@@ -107,7 +102,6 @@ final class StartViewController: UIViewController {
         // Добавляем кнопки в startAndResultsStack
         startAndResultsStack.addArrangedSubview(startButton)
         startAndResultsStack.addArrangedSubview(resultsButton)
-        
         
         // Добавляем все в главное view
         view.addSubview(backgroundView)
@@ -119,17 +113,39 @@ final class StartViewController: UIViewController {
         
     }
     
+    private func addTargetAction() {
+        askButton.addTarget(
+            self,
+            action: #selector(showVC(_:)),
+            for: .touchUpInside
+        )
+        startButton.addTarget(
+            self,
+            action: #selector(showVC(_:)),
+            for: .touchUpInside
+        )
+    }
+    
+    @objc func showVC(_ sender: UIButton) {
+        switch sender {
+        case askButton:
+            navigationController?.pushViewController(RulesViewController(), animated: true)
+        case startButton:
+            navigationController?.pushViewController(LoadViewController(), animated: true)
+        default:
+            break
+        }
+    }
     
     //MARK: - Constraints
     
-    func setupConstraints() {
-        //
+    private func setupConstraints() {
+        
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         // Gear / Ask
-        
         gearAndAskStack.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(5)
             make.trailing.equalToSuperview().offset(-5)
@@ -159,24 +175,16 @@ final class StartViewController: UIViewController {
             
         }
         
-        
-        
         // настройка и привязка stackview с кнопками start и results
-        
         startAndResultsStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
             make.height.equalTo(110)
             make.width.equalTo(200)
         }
-        
     }
 }
 
-
-struct ViewControllerProvider: PreviewProvider {
-    static var previews: some View {
-        
-        StartViewController().showPreview()
-    }
-}
+#Preview("StartVC", body: {
+    StartViewController()
+})
