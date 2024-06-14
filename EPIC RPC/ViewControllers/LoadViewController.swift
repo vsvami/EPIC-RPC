@@ -10,6 +10,7 @@ import UIKit
 final class LoadViewController: UIViewController {
 
     let frameHeight: CGFloat = UIScreen .main.bounds.size.height
+    let dataStore = DataStore.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +34,8 @@ final class LoadViewController: UIViewController {
     func setupUI(){
         createBackgroundImageView()
         setVcImage()
-        createPlayerStackView(imageName: "player1", labelText: "10 victories / 2 lose", yValue: frameHeight * 0.18)
-        createPlayerStackView(imageName: "player2", labelText: "15 victories / 1 lose", yValue: frameHeight * 0.64)
+        createPlayerStackView(imageName: "player1", labelText: "\(dataStore.computer.wins) victories / \(dataStore.computer.losses) lose", yValue: frameHeight * 0.18)
+        createPlayerStackView(imageName: "player2", labelText: "\(dataStore.player.wins) victories / \(dataStore.player.losses) lose", yValue: frameHeight * 0.64)
         createGetReady()
     }
 }
@@ -104,6 +105,14 @@ extension LoadViewController {
         label.text = text
         return label
     }
+    
+    /*
+    private let createPlayerStat: UILabel = {
+        let label = CustomLabelFactory(text: "", fontSize: 30, color: .customOrange)
+        label.text = text
+        return label.creatLabel()
+    }()
+     */
     
     // создаем и позиционируем кнопку Get Ready
     private func createGetReady(){
