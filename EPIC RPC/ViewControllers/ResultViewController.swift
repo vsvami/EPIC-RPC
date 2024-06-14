@@ -45,6 +45,8 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.hidesBackButton = true
+        
         setupbuttonsStackView()
         
         setupSubview(
@@ -57,9 +59,20 @@ final class ResultViewController: UIViewController {
         )
         
         setupLayout()
-        
+        addTargetAction()
     }
     
+    @objc func goToMainViewController() {
+        if let navigationController = navigationController {
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
+    
+    @objc func repeatButtonTapped() {
+        if let navigationController = navigationController {
+        navigationController.popViewController(animated: true)
+        }
+    }
 }
 
 private extension ResultViewController {
@@ -76,19 +89,6 @@ private extension ResultViewController {
             action: #selector(repeatButtonTapped),
             for: .touchUpInside
         )
-    }
-    
-    @objc func goToMainViewController() {
-        if let navigationController = navigationController {
-            navigationController.popToRootViewController(animated: true)
-        }
-    }
-    
-    @objc func repeatButtonTapped() {
-        if let navigationController = navigationController {
-            let roundVC = RoundViewController()
-            navigationController.setViewControllers([roundVC], animated: true)
-        }
     }
     
     func setupbuttonsStackView() {
@@ -146,5 +146,4 @@ private extension ResultViewController {
             make.top.equalTo(scoreLabel.snp.bottom).offset(30)
         }
     }
-    
 }

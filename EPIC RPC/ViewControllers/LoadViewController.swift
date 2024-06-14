@@ -19,6 +19,8 @@ final class LoadViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        navigationItem.hidesBackButton = true
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             self.navigateToResultVC()
         }
