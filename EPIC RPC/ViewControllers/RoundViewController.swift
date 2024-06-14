@@ -111,6 +111,42 @@ final class RoundViewController: UIViewController {
         
     }
     
+    @objc func updateCountdown() {
+        if countdownSeconds > 0 {
+            countdownSeconds -= 1
+            updateCountdownLabel()
+            updateProgressView()
+        } else {
+            endRound()
+        }
+    }
+    
+    @objc func backToMain() {
+        if let navigationController = navigationController {
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
+    
+    @objc func pauseGame() {
+        navigationController?.pushViewController(ResultViewController(), animated: true)
+    }
+    
+    @objc func actionButtonTapped(_ sender: UIButton) {
+        
+        switch sender {
+        case rockButton:
+
+            // timer - 1 second
+            move(.rock)
+        case scissorsButton:
+            move(.scissors)
+        case paperButton:
+            move(.paper)
+        default:
+            playerOneHand.image = UIImage(named: "femaleHand")
+            playerTwoHand.image = UIImage(named: "maleHand")
+        }
+    }
 }
 
 // MARK: - Private Methods
@@ -152,16 +188,6 @@ private extension RoundViewController {
         }
     }
     
-    @objc func updateCountdown() {
-        if countdownSeconds > 0 {
-            countdownSeconds -= 1
-            updateCountdownLabel()
-            updateProgressView()
-        } else {
-            endRound()
-        }
-    }
-    
     func startMusic() {
         if let url = Bundle.main.url(forResource: "music", withExtension: "mp3") {
             
@@ -176,6 +202,27 @@ private extension RoundViewController {
             }
         } else {
             print("Музыкальный файл не найден.")
+        }
+    }
+    
+    func move(_ move: Player.Move) {
+        let playerOneMove = Player.Move.randomMoves()
+        let playerTwoMove = move
+        
+        let result = game.playRound(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
+        textLabel.text = result
+        
+        playerOneHand.image = UIImage(named: playerOneMove.femaleHandImage)
+        playerTwoHand.image = UIImage(named: playerTwoMove.maleHandImage)
+        
+        playerOneProgressView.setProgress(Float(dataStore.computer.score) / 3, animated: true)
+        playerTwoProgressView.setProgress(Float(dataStore.player.score) / 3, animated: true)
+        
+        if game.isGameOver() {
+            if let winner = game.getWinner() {
+                print("\(winner === DataStore.shared.player ? "Player" : "Computer") wins the game!")
+            }
+            game.resetScores()
         }
     }
     
@@ -196,6 +243,15 @@ private extension RoundViewController {
             target: self,
             action: #selector(pauseGame)
         )
+        
+        let backImage = UIImage(systemName: "chevron.left")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: backImage,
+            style: .plain,
+            target: self,
+            action: #selector(backToMain)
+        )
+            
         
         navigationController?.navigationBar.tintColor = UIColor.customGray
     }
@@ -305,53 +361,6 @@ private extension RoundViewController {
             make.bottom.equalToSuperview().inset(50)
             make.width.height.equalTo(80)
         }
-        
     }
-    
-
-    
-    func move(_ move: Player.Move) {
-        let playerOneMove = Player.Move.randomMoves()
-        let playerTwoMove = move
-        
-        let result = game.playRound(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
-        textLabel.text = result
-        
-        playerOneHand.image = UIImage(named: playerOneMove.femaleHandImage)
-        playerTwoHand.image = UIImage(named: playerTwoMove.maleHandImage)
-        
-        playerOneProgressView.setProgress(Float(dataStore.computer.score) / 3, animated: true)
-        playerTwoProgressView.setProgress(Float(dataStore.player.score) / 3, animated: true)
-        
-        if game.isGameOver() {
-            if let winner = game.getWinner() {
-                print("\(winner === DataStore.shared.player ? "Player" : "Computer") wins the game!")
-            }
-            game.resetScores()
-        }
-    }
-    
-    @objc func pauseGame() {
-        
-    }
-    
-    @objc func actionButtonTapped(_ sender: UIButton) {
-        
-        switch sender {
-        case rockButton:
-
-            // timer - 1 second
-            move(.rock)
-        case scissorsButton:
-            move(.scissors)
-        case paperButton:
-            move(.paper)
-        default:
-            playerOneHand.image = UIImage(named: "femaleHand")
-            playerTwoHand.image = UIImage(named: "maleHand")
-        }
-        
-    }
-    
 }
 
