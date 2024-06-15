@@ -134,7 +134,7 @@ class Game {
         return playerOne.score >= maxScore || playerTwo.score >= maxScore
     }
     
-    func getWinner() -> Player? {
+    func getWinner() -> Player {
         if playerOne.score >= maxScore {
             playerOne.recordWin()
             playerTwo.recordLoss()
@@ -144,7 +144,7 @@ class Game {
             playerOne.recordLoss()
             return playerTwo
         }
-        return nil
+        fatalError("No winner determined, ensure one player has reached the max score")
     }
     
    func resetScores() {

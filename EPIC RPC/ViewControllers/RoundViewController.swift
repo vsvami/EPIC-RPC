@@ -110,7 +110,12 @@ final class RoundViewController: UIViewController {
         super.viewWillAppear(animated)
         game.resetScores()
         setupAudioPlayer()
-        startNewRound()
+        updateUIForNewRound(resultText: "FIGHT")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.startNewRound()
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -243,7 +248,9 @@ private extension RoundViewController {
     }
     
     // MARK: - Update UI
-    func updateUIForNewRound() {
+    func updateUIForNewRound(resultText: String) {
+        textLabel.text = resultText
+        
         updatePlayersHand()
         updatePlayersProgress()
         
@@ -284,7 +291,7 @@ private extension RoundViewController {
         
         game.startRound()
         resetTimer()
-        updateUIForNewRound()
+        updateUIForNewRound(resultText: "")
         print("\(dataStore.player.score) - \(dataStore.computer.score)")
     }
     
@@ -308,18 +315,24 @@ private extension RoundViewController {
     }
     
     func handleRoundResult(_ result: String) {
-        textLabel.text = result == "DRAW" ? "DRAW" : result
+        
+        updateUIForNewRound(resultText: result)
         
         if game.isGameOver() {
             let winner = game.getWinner()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                self?.navigationController?.pushViewController(ResultViewController(), animated: true)
+                self?.navigateToResultScreen(winner: winner)
             }
-            
         } else {
-            updateUIForNewRound()
+            updateUIForNewRound(resultText: result)
         }
+    }
+    
+    func navigateToResultScreen(winner: Player) {
+        let resultViewController = ResultViewController()
+        resultViewController.winner = winner // Передайте нужные данные на экран результата
+        navigationController?.pushViewController(resultViewController, animated: true)
     }
     
     // MARK: - Setup UI
