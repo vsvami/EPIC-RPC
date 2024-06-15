@@ -292,7 +292,6 @@ private extension RoundViewController {
         game.startRound()
         resetTimer()
         updateUIForNewRound(resultText: "")
-        print("\(dataStore.player.score) - \(dataStore.computer.score)")
     }
     
     func determineMove(from button: UIButton) -> Player.Move {

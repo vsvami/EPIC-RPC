@@ -80,7 +80,12 @@ final class ResultViewController: UIViewController {
     
     @objc func repeatButtonTapped() {
         if let navigationController = navigationController {
-            navigationController.popViewController(animated: true)
+            let loadViewController = LoadViewController()
+            let viewControllers = navigationController.viewControllers
+            if let startVC = viewControllers.first(where: { $0 is StartViewController }) {
+                navigationController.setViewControllers([startVC, loadViewController], animated: true)
+            }
+            
         }
     }
 }
