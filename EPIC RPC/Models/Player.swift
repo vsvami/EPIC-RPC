@@ -5,6 +5,8 @@
 //  Created by Vladimir Dmitriev on 12.06.24.
 //
 
+import Foundation
+
 class Player {
     var currentMove: Move
     var score: Int
@@ -72,27 +74,42 @@ class Player {
     }
 }
 
-struct Game {
+class Game {
     var playerOne: Player
     var playerTwo: Player
     let maxScore = 3
     
-    mutating func playRound(playerOneMove: Player.Move, playerTwoMove: Player.Move) -> String {
-        playerOne.currentMove = playerOneMove
-        playerTwo.currentMove = playerTwoMove
-        
-        let result = determineWinner(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
-        
-        switch result {
-        case .draw:
-            return "DRAW"
-        case .playerOneWins:
-            playerOne.score += 1
-            return ""
-        case .playerTwoWins:
-            playerTwo.score += 1
-            return ""
+    init(playerOne: Player, playerTwo: Player) {
+        self.playerOne = playerOne
+        self.playerTwo = playerTwo
+    }
+    
+    func startRound(playerOneMove: Player.Move? = nil, playerTwoMove: Player.Move? = nil) {
+        playerOne.currentMove = playerOneMove ?? .ready
+        playerTwo.currentMove = playerTwoMove ?? .ready
+    }
+    
+    func playRound(playerOneMove: Player.Move, playerTwoMove: Player.Move) -> String {
+            
+            playerOne.currentMove = playerOneMove
+            playerTwo.currentMove = playerTwoMove
+            
+            let result = determineWinner(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
+            
+            switch result {
+            case .draw:
+                return "DRAW"
+            case .playerOneWins:
+                playerOne.score += 1
+                return ""
+            case .playerTwoWins:
+                playerTwo.score += 1
+                return ""
+            }
         }
+    
+    func endRoundDueToTimeout() {
+        playerOne.score += 1
     }
     
     func determineWinner(playerOneMove: Player.Move, playerTwoMove: Player.Move) -> RoundResult {
@@ -117,7 +134,7 @@ struct Game {
         return playerOne.score >= maxScore || playerTwo.score >= maxScore
     }
     
-    mutating func getWinner() -> Player? {
+    func getWinner() -> Player? {
         if playerOne.score >= maxScore {
             playerOne.recordWin()
             playerTwo.recordLoss()
@@ -130,7 +147,7 @@ struct Game {
         return nil
     }
     
-    mutating func resetScores() {
+   func resetScores() {
         playerOne.resetScore()
         playerTwo.resetScore()
     }

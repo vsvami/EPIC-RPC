@@ -15,6 +15,13 @@ final class RoundViewController: UIViewController {
     private let dataStore = DataStore.shared
     private var game: Game!
     
+    private var audioPlayer: AVAudioPlayer?
+    private var clickPlayer: AVAudioPlayer?
+    
+    private var timer: Timer?
+    private var timeRemaining: Int = 30
+    private var isPaused: Bool = false
+    
     private let backgroundImageView = UIImageView(image: UIImage(named: "Background2"))
     
     private let playerOneHand = UIImageView(image: UIImage(named: "femaleHand"))
@@ -32,12 +39,12 @@ final class RoundViewController: UIViewController {
         let label = CustomLabelFactory(text: "0:30", fontSize: 16, color: .white)
         return label.creatLabel()
     } ()
- 
+    
     private let timerProgressView: UIProgressView = {
         let progressView = CustomProgressViewFactory(value: 1, tintColor: .customGreen, angle: -2)
         return progressView.createProgressView()
     } ()
-
+    
     private let playerOneProgressView: UIProgressView = {
         let progressView = CustomProgressViewFactory(value: 0, tintColor: .customOrange, angle: 2)
         return progressView.createProgressView()
@@ -69,20 +76,14 @@ final class RoundViewController: UIViewController {
         return button.createButton()
     } ()
     
-    private var musicPlayer: AVAudioPlayer?
-    
-    private var countdownTimer: Timer?
-    private var countdownSeconds: Int = 30
-    
     // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startMusic()
+        game = Game(playerOne: dataStore.computer, playerTwo: dataStore.player)
         
         setupNavigationBar()
         setupTimerProgressView()
-        
         
         setupSubview(
             backgroundImageView,
@@ -102,25 +103,23 @@ final class RoundViewController: UIViewController {
         )
         
         setupLayout()
-        
         setupButtonAction()
-        
-        game = Game(playerOne: dataStore.computer, playerTwo: dataStore.player)
-        
-        startCountdown()
-        
     }
     
-    @objc func updateCountdown() {
-        if countdownSeconds > 0 {
-            countdownSeconds -= 1
-            updateCountdownLabel()
-            updateProgressView()
-        } else {
-            endRound()
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        game.resetScores()
+        setupAudioPlayer()
+        startNewRound()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopMusic()
+        timer?.invalidate()
+    }
+    
+    // MARK: - Actions
     @objc func backToMain() {
         if let navigationController = navigationController {
             navigationController.popToRootViewController(animated: true)
@@ -128,23 +127,50 @@ final class RoundViewController: UIViewController {
     }
     
     @objc func pauseGame() {
-        navigationController?.pushViewController(ResultViewController(), animated: true)
+        if isPaused {
+            resumeTimer()
+            textLabel.text = ""
+        } else {
+            pauseTimer()
+            textLabel.text = "PAUSE"
+        }
+        isPaused.toggle()
     }
     
-    @objc func actionButtonTapped(_ sender: UIButton) {
+    @objc func playerTwoMoveSelected(_ sender: UIButton) {
+        playClickSound()
         
-        switch sender {
-        case rockButton:
+        rockButton.isEnabled = false
+        scissorsButton.isEnabled = false
+        paperButton.isEnabled = false
+        
+        let playerOneMove = Player.Move.randomMoves()
+        let playerTwoMove = determineMove(from: sender)
 
-            // timer - 1 second
-            move(.rock)
-        case scissorsButton:
-            move(.scissors)
-        case paperButton:
-            move(.paper)
-        default:
-            playerOneHand.image = UIImage(named: "femaleHand")
-            playerTwoHand.image = UIImage(named: "maleHand")
+        let result = game.playRound(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
+        
+        timer?.invalidate()
+        
+        sender.isEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.handleRoundResult(result)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            if self?.game.isGameOver() == false {
+                self?.startNewRound()
+            }
+        }
+    }
+    
+    @objc func updateTime() {
+        timeRemaining -= 1
+        updateTimerLabel()
+        updateTimerProgressView()
+        if timeRemaining <= 0 {
+            timer?.invalidate()
+            endRoundDueToTimeout()
         }
     }
 }
@@ -152,51 +178,30 @@ final class RoundViewController: UIViewController {
 // MARK: - Private Methods
 private extension RoundViewController {
     
-    func setupButtonAction() {
-        rockButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-        scissorsButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-        paperButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
-    }
-    
-    func updateProgressView() {
-        let progress = Float(countdownSeconds) / 30.0
-        timerProgressView.setProgress(progress, animated: true)
-    }
-    
-    func startCountdown() {
-        timerLabel.text = "0:\(countdownSeconds)"
-        countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
-    }
-    
-    func updateCountdownLabel() {
-        timerLabel.text = "0:\(countdownSeconds)"
-    }
-    
-    func endRound() {
-        countdownTimer?.invalidate()
-        countdownTimer = nil
-        
-        let result = game.playRound(playerOneMove: .paper, playerTwoMove: .rock)
-        
-        textLabel.text = "Time's up! \(result)"
-        
-        if game.isGameOver() {
-            if let winner = game.getWinner() {
-                textLabel.text = "\(winner === DataStore.shared.player ? "Player" : "Computer") wins the game!"
+    // MARK: - Setup Audio
+    func playClickSound() {
+        if let url = Bundle.main.url(forResource: "click", withExtension: "mp3") {
+            do {
+                clickPlayer = try AVAudioPlayer(contentsOf: url)
+                clickPlayer?.volume = 1
+                clickPlayer?.play()
+            } catch {
+                print("Ошибка воспроизведения клика: \(error.localizedDescription)")
             }
-            game.resetScores()
+        } else {
+            print("Файл звука клика не найден.")
         }
     }
     
-    func startMusic() {
+    func setupAudioPlayer() {
         if let url = Bundle.main.url(forResource: "music", withExtension: "mp3") {
             
             do {
-                musicPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
                 
-                musicPlayer?.numberOfLoops = -1
-                musicPlayer?.volume = 0.2
-                musicPlayer?.play()
+                audioPlayer?.numberOfLoops = -1
+                audioPlayer?.volume = 0.3
+                audioPlayer?.play()
             } catch {
                 print("Ошибка воспроизведения музыки: \(error.localizedDescription)")
             }
@@ -205,25 +210,123 @@ private extension RoundViewController {
         }
     }
     
-    func move(_ move: Player.Move) {
-        let playerOneMove = Player.Move.randomMoves()
-        let playerTwoMove = move
+    private func playMusic() {
+        audioPlayer?.play()
+    }
+    
+    private func pauseMusic() {
+        audioPlayer?.pause()
+    }
+    
+    private func stopMusic() {
+        audioPlayer?.stop()
+        audioPlayer?.currentTime = 0
+    }
+    
+    // MARK: - Setup Timer
+    func pauseTimer() {
+        timer?.invalidate()
+        pauseMusic()
+    }
+    
+    func resumeTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        playMusic()
+    }
+    
+    func resetTimer() {
+        timer?.invalidate()
+        timeRemaining = 30
+        updateTimerLabel()
+        updateTimerProgressView()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+    }
+    
+    // MARK: - Update UI
+    func updateUIForNewRound() {
+        updatePlayersHand()
+        updatePlayersProgress()
         
-        let result = game.playRound(playerOneMove: playerOneMove, playerTwoMove: playerTwoMove)
-        textLabel.text = result
+        updateTimerLabel()
+        updateTimerProgressView()
+    }
+    
+    func updatePlayersHand() {
+        let image = dataStore.computer.currentMove.femaleHandImage
+        let image2 = dataStore.player.currentMove.maleHandImage
+    
+        playerOneHand.image = UIImage(named: image)
+        playerTwoHand.image = UIImage(named: image2)
+    }
+    
+    func updatePlayersProgress() {
+        let playerOneScore = dataStore.computer.score
+        playerOneProgressView.progress = Float(playerOneScore) / 3
         
-        playerOneHand.image = UIImage(named: playerOneMove.femaleHandImage)
-        playerTwoHand.image = UIImage(named: playerTwoMove.maleHandImage)
+        let playerTwoScore = dataStore.player.score
+        playerTwoProgressView.progress = Float(playerTwoScore) / 3
+    }
+    
+    func updateTimerLabel() {
+        timerLabel.text = "0:\(timeRemaining)"
+    }
+    
+    func updateTimerProgressView() {
+        let progress = Float(timeRemaining) / 30.0
+        timerProgressView.setProgress(progress, animated: true)
+    }
+    
+    // MARK: - Game
+    func startNewRound() {
+        rockButton.isEnabled = true
+        scissorsButton.isEnabled = true
+        paperButton.isEnabled = true
         
-        playerOneProgressView.setProgress(Float(dataStore.computer.score) / 3, animated: true)
-        playerTwoProgressView.setProgress(Float(dataStore.player.score) / 3, animated: true)
+        game.startRound()
+        resetTimer()
+        updateUIForNewRound()
+        print("\(dataStore.player.score) - \(dataStore.computer.score)")
+    }
+    
+    func determineMove(from button: UIButton) -> Player.Move {
+        switch button {
+        case rockButton:
+            return Player.Move.rock
+        case scissorsButton:
+            return Player.Move.scissors
+        case paperButton:
+            return Player.Move.paper
+        default:
+            return Player.Move.ready
+        }
+    }
+    
+    func endRoundDueToTimeout() {
+        game.endRoundDueToTimeout()
+        handleRoundResult("")
+        startNewRound()
+    }
+    
+    func handleRoundResult(_ result: String) {
+        textLabel.text = result == "DRAW" ? "DRAW" : result
         
         if game.isGameOver() {
-            if let winner = game.getWinner() {
-                print("\(winner === DataStore.shared.player ? "Player" : "Computer") wins the game!")
+            let winner = game.getWinner()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                self?.navigationController?.pushViewController(ResultViewController(), animated: true)
             }
-            game.resetScores()
+            
+        } else {
+            updateUIForNewRound()
         }
+    }
+    
+    // MARK: - Setup UI
+    func setupButtonAction() {
+        rockButton.addTarget(self, action: #selector(playerTwoMoveSelected), for: .touchUpInside)
+        scissorsButton.addTarget(self, action: #selector(playerTwoMoveSelected), for: .touchUpInside)
+        paperButton.addTarget(self, action: #selector(playerTwoMoveSelected), for: .touchUpInside)
     }
     
     func setupNavigationBar() {
@@ -235,7 +338,7 @@ private extension RoundViewController {
             .font: UIFont.systemFont(ofSize: 24)
         ]
         navigationController?.navigationBar.standardAppearance = navBarAppearance
-
+        
         let pauseImage = UIImage(systemName: "pause.circle")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: pauseImage,
@@ -251,7 +354,6 @@ private extension RoundViewController {
             target: self,
             action: #selector(backToMain)
         )
-            
         
         navigationController?.navigationBar.tintColor = UIColor.customGray
     }
@@ -292,7 +394,7 @@ private extension RoundViewController {
             make.leading.equalToSuperview().inset(50)
             make.trailing.equalToSuperview().inset(200)
         }
-       
+        
         playerTwoHand.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(150)
             make.leading.equalToSuperview().inset(200)
@@ -305,7 +407,7 @@ private extension RoundViewController {
             make.width.equalTo(200)
             make.height.equalTo(10)
         }
-       
+        
         timerLabel.snp.makeConstraints { make in
             make.centerX.equalTo(timerProgressView.snp.centerX)
             make.top.equalTo(timerProgressView.snp.bottom).offset(110)
