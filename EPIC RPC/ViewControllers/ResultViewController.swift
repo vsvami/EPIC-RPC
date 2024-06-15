@@ -110,6 +110,9 @@ private extension ResultViewController {
             resultLabel.text = "You Win"
             scoreLabel.text = "\(playerOneScore) - \(playerTwoScore)"
         }
+        
+        dataStore.computer.currentMove = .ready
+        dataStore.player.currentMove = .ready
     }
     
     func addTargetAction() {
