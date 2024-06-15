@@ -6,8 +6,14 @@
 //
 
 import UIKit
-import SwiftUI
+
 final class ResultViewController: UIViewController {
+    
+    // MARK: - Public Properties
+    var winner: Player! = nil
+    
+    // MARK: - Private Properties
+    private let dataStore = DataStore.shared
     
     private let backgroundImageView = UIImageView(image: UIImage(named: "Background1"))
     
@@ -42,6 +48,7 @@ final class ResultViewController: UIViewController {
     
     private let stackView = UIStackView()
     
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,8 +67,11 @@ final class ResultViewController: UIViewController {
         
         setupLayout()
         addTargetAction()
+        
+        determineWinner()
     }
     
+    // MARK: - Actions
     @objc func goToMainViewController() {
         if let navigationController = navigationController {
             navigationController.popToRootViewController(animated: true)
@@ -70,12 +80,32 @@ final class ResultViewController: UIViewController {
     
     @objc func repeatButtonTapped() {
         if let navigationController = navigationController {
-        navigationController.popViewController(animated: true)
+            navigationController.popViewController(animated: true)
         }
     }
 }
 
+// MARK: - Private Methods
 private extension ResultViewController {
+    
+    func determineWinner() {
+        
+        let playerOneScore = dataStore.computer.score
+        let playerTwoScore = dataStore.player.score
+
+        if playerOneScore > playerTwoScore {
+            backgroundImageView.image = UIImage(named: "Background")
+            playerImage.image = UIImage(named: "player1")
+            resultLabel.text = "You Loss"
+            resultLabel.textColor = .black
+            scoreLabel.text = "\(playerOneScore) - \(playerTwoScore)"
+        } else {
+            backgroundImageView.image = UIImage(named: "Background1")
+            playerImage.image = UIImage(named: "player2")
+            resultLabel.text = "You Win"
+            scoreLabel.text = "\(playerOneScore) - \(playerTwoScore)"
+        }
+    }
     
     func addTargetAction() {
         homeButton.addTarget(

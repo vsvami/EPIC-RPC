@@ -24,8 +24,9 @@
 		640215692C1A63DD001D1E84 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640215682C1A63DD001D1E84 /* RulesViewController.swift */; };
 		6402156B2C1A63F1001D1E84 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402156A2C1A63F1001D1E84 /* LoadViewController.swift */; };
 		6402156E2C1B1784001D1E84 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402156D2C1B1784001D1E84 /* DataStore.swift */; };
-		649366322C1BAC0900EAEFF2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 649366312C1BAC0900EAEFF2 /* SnapKit */; };
-		649366342C1BAC0A00EAEFF2 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 649366332C1BAC0A00EAEFF2 /* SnapKit-Dynamic */; };
+		649A25AF2C1C962B00071356 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 649A25AE2C1C962B00071356 /* SnapKit */; };
+		649A25B12C1C962B00071356 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 649A25B02C1C962B00071356 /* SnapKit-Dynamic */; };
+		649A25B52C1D260000071356 /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649A25B42C1D260000071356 /* click.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		640215682C1A63DD001D1E84 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
 		6402156A2C1A63F1001D1E84 /* LoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		6402156D2C1B1784001D1E84 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		649A25B42C1D260000071356 /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				649366322C1BAC0900EAEFF2 /* SnapKit in Frameworks */,
-				649366342C1BAC0A00EAEFF2 /* SnapKit-Dynamic in Frameworks */,
+				649A25AF2C1C962B00071356 /* SnapKit in Frameworks */,
+				649A25B12C1C962B00071356 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				640215402C1A5A34001D1E84 /* Assets.xcassets */,
+				649A25B42C1D260000071356 /* click.mp3 */,
 				640215512C1A5C96001D1E84 /* music.mp3 */,
 			);
 			path = Resources;
@@ -177,8 +180,8 @@
 			);
 			name = "EPIC RPC";
 			packageProductDependencies = (
-				649366312C1BAC0900EAEFF2 /* SnapKit */,
-				649366332C1BAC0A00EAEFF2 /* SnapKit-Dynamic */,
+				649A25AE2C1C962B00071356 /* SnapKit */,
+				649A25B02C1C962B00071356 /* SnapKit-Dynamic */,
 			);
 			productName = "EPIC RPC";
 			productReference = 640215342C1A5A32001D1E84 /* EPIC RPC.app */;
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				640215412C1A5A34001D1E84 /* Assets.xcassets in Resources */,
+				649A25B52C1D260000071356 /* click.mp3 in Resources */,
 				640215442C1A5A34001D1E84 /* Base in Resources */,
 				640215522C1A5C96001D1E84 /* music.mp3 in Resources */,
 			);
@@ -485,12 +489,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		649366312C1BAC0900EAEFF2 /* SnapKit */ = {
+		649A25AE2C1C962B00071356 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A105EF32C1B21BB00CE398F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		649366332C1BAC0A00EAEFF2 /* SnapKit-Dynamic */ = {
+		649A25B02C1C962B00071356 /* SnapKit-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A105EF32C1B21BB00CE398F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
