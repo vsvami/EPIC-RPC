@@ -26,14 +26,33 @@ final class RulesViewController: UIViewController {
     
     func setupUI(){
         view.backgroundColor = .white
+        setupNavigationBar()
         createHeading()
         setRules()
         
+    }
+    
+    @objc func backToMain() {
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+        }
     }
 
 }
 
 extension RulesViewController {
+    
+    func setupNavigationBar() {
+        let backImage = UIImage(systemName: "chevron.left")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: backImage,
+            style: .plain,
+            target: self,
+            action: #selector(backToMain)
+        )
+        
+        navigationController?.navigationBar.tintColor = UIColor.customGray
+    }
     
     private func createHeading(){
         let label = UILabel()

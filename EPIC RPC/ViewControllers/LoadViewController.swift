@@ -9,8 +9,40 @@ import UIKit
 
 final class LoadViewController: UIViewController {
 
-    let frameHeight: CGFloat = UIScreen .main.bounds.size.height
+    let frameHeight: CGFloat = UIScreen.main.bounds.size.height
     let dataStore = DataStore.shared
+
+    private let winsOfPlayerOneLabel: UILabel = {
+        let label = CustomLabelFactory(text: "0", fontSize: 24, color: .customOrange)
+        return label.creatLabel()
+    } ()
+    
+    private let lossesOfPlayerOneLabel: UILabel = {
+        let label = CustomLabelFactory(text: "0", fontSize: 24, color: .customRed)
+        return label.creatLabel()
+    } ()
+    
+    private let winsOfPlayerTwoLabel: UILabel = {
+        let label = CustomLabelFactory(text: "0", fontSize: 24, color: .customOrange)
+        return label.creatLabel()
+    } ()
+    
+    private let lossesOfPlayerTwoLabel: UILabel = {
+        let label = CustomLabelFactory(text: "0", fontSize: 24, color: .customRed)
+        return label.creatLabel()
+    } ()
+    
+    
+    
+    private let vsLabel: UILabel = {
+        let label = CustomLabelFactory(text: "VS", fontSize: 50, color: .customOrange)
+        return label.creatLabel()
+    } ()
+    
+    private let getReadyLabel: UILabel = {
+        let label = CustomLabelFactory(text: "Get ready...", fontSize: 20, color: .customOrange)
+        return label.creatLabel()
+    } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +65,29 @@ final class LoadViewController: UIViewController {
     
     func setupUI(){
         createBackgroundImageView()
-        setVcImage()
-        createPlayerStackView(imageName: "player1", labelText: "\(dataStore.computer.wins) victories / \(dataStore.computer.losses) lose", yValue: frameHeight * 0.18)
-        createPlayerStackView(imageName: "player2", labelText: "\(dataStore.player.wins) victories / \(dataStore.player.losses) lose", yValue: frameHeight * 0.64)
+        setupVSLabel()
         createGetReady()
+        
+        createPlayerStackView(
+            imageName: "player1",
+            winLabel: winsOfPlayerOneLabel,
+            winLabelText: "\(dataStore.computer.wins)",
+            lossLabel: lossesOfPlayerOneLabel,
+            loseLabelText: "\(dataStore.computer.losses)",
+            yValue: frameHeight * 0.18
+        )
+        
+
+        createPlayerStackView(
+            imageName: "player2",
+            winLabel: winsOfPlayerTwoLabel,
+            winLabelText: "\(dataStore.player.wins)",
+            lossLabel: lossesOfPlayerTwoLabel,
+            loseLabelText: "\(dataStore.player.losses)",
+            yValue: frameHeight * 0.64
+        )
+        
+        setupVSLabel()
     }
 }
 
@@ -64,34 +115,72 @@ extension LoadViewController {
         return imageView
     }
     
-    // инициализируем изображение VC и позиционируем его
-    private func setVcImage(){
-        let imageView = createImage("vs")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    // инициализируем VS и позиционируем его
+    private func setupVSLabel() {
+        view.addSubview(vsLabel)
+        
+        vsLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        vsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        vsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    // создаем фнкцию по созданию стека для изображения игрока и статистики и его позиционированием
-    private func createPlayerStackView(imageName: String, labelText: String, yValue: CGFloat){
+    private func createPlayerStackView(
+        imageName: String,
+        winLabel: UILabel,
+        winLabelText: String,
+        lossLabel: UILabel,
+        loseLabelText: String,
+        yValue: CGFloat
+    ){
         // настраиваем StackView
         let stackView = UIStackView()
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 15
+        stackView.spacing = 10
         stackView.center = view.center
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         
         // создаем изображение Игрока и его статистику
+        let victoriesLabel: UILabel = {
+            let label = CustomLabelFactory(text: "Victories", fontSize: 24, color: .white)
+            return label.creatLabel()
+        } ()
+        
+        let loseLabel: UILabel = {
+            let label = CustomLabelFactory(text: "Lose", fontSize: 24, color: .white)
+            return label.creatLabel()
+        } ()
+        
+        let winsStackView = UIStackView()
+        winLabel.text = winLabelText
+        winsStackView.translatesAutoresizingMaskIntoConstraints = false
+        winsStackView.axis = .horizontal
+        winsStackView.spacing = 5
+        winsStackView.center = view.center
+        winsStackView.alignment = .center
+        winsStackView.distribution = .equalSpacing
+        winsStackView.addArrangedSubview(winLabel)
+        winsStackView.addArrangedSubview(victoriesLabel)
+        
+        let loseStackView = UIStackView()
+        lossLabel.text = loseLabelText
+        loseStackView.translatesAutoresizingMaskIntoConstraints = false
+        loseStackView.axis = .horizontal
+        loseStackView.spacing = 5
+        loseStackView.center = view.center
+        loseStackView.alignment = .center
+        loseStackView.distribution = .equalSpacing
+        loseStackView.addArrangedSubview(lossLabel)
+        loseStackView.addArrangedSubview(loseLabel)
+        
         let imageView = createImage(imageName)
-        let label = createPlayerStat(labelText)
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 25)
+        
         stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(label)
+        stackView.addArrangedSubview(winsStackView)
+        stackView.addArrangedSubview(loseStackView)
         
         // позиционируем StackView
         stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: yValue).isActive = true
@@ -99,34 +188,15 @@ extension LoadViewController {
         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
-    // содаем статистику для игрока
-    private func createPlayerStat(_ text: String) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        return label
-    }
-    
-    /*
-    private let createPlayerStat: UILabel = {
-        let label = CustomLabelFactory(text: "", fontSize: 30, color: .customOrange)
-        label.text = text
-        return label.creatLabel()
-    }()
-     */
-    
     // создаем и позиционируем кнопку Get Ready
     private func createGetReady(){
-        let label = UILabel()
-        label.text = "Get ready..."
-        label.textColor = .systemYellow
-        label.font = UIFont.systemFont(ofSize: 30)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+        getReadyLabel.textAlignment = .center
+        getReadyLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(getReadyLabel)
         
-        label.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        getReadyLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        getReadyLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        getReadyLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
     }
 
 }
